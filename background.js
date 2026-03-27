@@ -3,7 +3,7 @@
 
 // PRODUCTION: Set this to your Vercel deployment URL (e.g., https://your-project.vercel.app)
 // DEVELOPMENT: Use localhost for local testing
-const DEFAULT_SERVER_URL = 'http://localhost:3000';
+const DEFAULT_SERVER_URL = 'https://code-companion-nine-inky.vercel.app';
 
 async function getAnalyzeUrl() {
   return new Promise(resolve => {
