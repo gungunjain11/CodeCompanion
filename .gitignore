@@ -1,0 +1,37 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Node modules and lock files
+node_modules/
+package-lock.json
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Vercel
+.vercel/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Backup files
+*.bak
+*.backup
+*.bak.js
+
+# Build outputs
+dist/
+build/
+out/
+
+# Local documentation (for setup reference only)
+START_HERE.md
+COMMANDS.md
+SETUP_CHANGES.md
