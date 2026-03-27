@@ -1,8 +1,4 @@
 {
   "version": 2,
-  "buildCommand": "npm install",
-  "env": {
-    "OPENROUTER_API_KEY": "@openrouter_api_key",
-    "OPENROUTER_MODEL": "@openrouter_model"
-  }
+  "buildCommand": "npm install"
 }
