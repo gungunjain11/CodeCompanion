@@ -22,7 +22,7 @@ An intelligent Chrome extension that explains, refactors, optimizes, and generat
    - Select this folder
    - The extension is ready to use!
 
-2. **Configure your OpenRouter API key:**
+2. **Configure your Google Gemini API key:**
    - Open the extension's side panel
    - Look for the server status indicator
    - Your Vercel backend is already connected
@@ -35,10 +35,10 @@ An intelligent Chrome extension that explains, refactors, optimizes, and generat
    ```bash
    cp .env.example .env
    ```
-   Edit `.env` and add your OpenRouter API key:
+   Edit `.env` and add your Google Gemini API key:
    ```
-   OPENROUTER_API_KEY=your_key_here
-   OPENROUTER_MODEL=openai/gpt-4o-mini
+   GEMINI_API_KEY=your_key_here
+   GEMINI_MODEL=gemini-2.0-flash
    ```
 
 3. **Install and test locally:**
@@ -55,14 +55,14 @@ An intelligent Chrome extension that explains, refactors, optimizes, and generat
    npm install -g vercel
    vercel
    ```
-   Follow the prompts and add your `OPENROUTER_API_KEY` as an environment variable.
+   Follow the prompts and add your `GEMINI_API_KEY` as an environment variable.
 
    **Option B: Using GitHub + Vercel Dashboard**
    - Push this repo to GitHub
    - Go to [vercel.com](https://vercel.com)
    - Click "New Project"
    - Import from GitHub
-   - Add `OPENROUTER_API_KEY` in Environment Variables
+   - Add `GEMINI_API_KEY` in Environment Variables
    - Deploy
 
 5. **Update the extension with your Vercel URL:**
@@ -102,10 +102,8 @@ Analyzes code using AI based on the requested action.
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `OPENROUTER_API_KEY` | ✅ Yes | Your OpenRouter API key |
-| `OPENROUTER_MODEL` | ❌ No | AI model (default: `openai/gpt-4o-mini`) |
-| `OPENROUTER_SITE_URL` | ❌ No | Your site URL for OpenRouter analytics |
-| `OPENROUTER_APP_NAME` | ❌ No | Your app name for OpenRouter analytics |
+| `GEMINI_API_KEY` | ✅ Yes | Your Google Gemini API key |
+| `GEMINI_MODEL` | ❌ No | AI model (default: `gemini-2.0-flash`) |
 
 ## Project Structure
 
@@ -144,21 +142,21 @@ Analyzes code using AI based on the requested action.
 
 ### Testing with Different Models
 
-Edit `.env` and change `OPENROUTER_MODEL`:
+Edit `.env` and change `GEMINI_MODEL`:
 ```bash
-OPENROUTER_MODEL=meta-llama/llama-2-70b-chat
-OPENROUTER_MODEL=anthropic/claude-3-5-sonnet
+GEMINI_MODEL=gemini-1.5-pro
+GEMINI_MODEL=gemini-2.0-flash
 ```
 
 ## Troubleshooting
 
 **"Backend server not responding"**
 - Check that your Vercel project is deployed and running
-- Verify `OPENROUTER_API_KEY` is set in Vercel environment variables
+- Verify `GEMINI_API_KEY` is set in Vercel environment variables
 - Check Vercel logs for errors
 
 **"Invalid API Key"**
-- Ensure your OpenRouter API key is correct
+- Ensure your Gemini API key is correct
 - In Vercel: Settings → Environment Variables
 - Restart the deployment after updating
 
@@ -180,7 +178,7 @@ MIT
 
 For issues or questions:
 1. Check the Vercel deployment logs
-2. Review OpenRouter API documentation
+2. Review Google Gemini API documentation
 3. Check Chrome extension console (right-click extension → Inspect)
 
 ---

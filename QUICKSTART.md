@@ -8,7 +8,7 @@ Get your ModelMirror extension running on GitHub and Vercel in 5 minutes.
 - Git installed
 - GitHub account
 - Vercel account (free at [vercel.com](https://vercel.com))
-- OpenRouter API key (free at [openrouter.ai](https://openrouter.ai))
+- Google Gemini API key (free at [ai.google.dev](https://ai.google.dev))
 
 ## 1️⃣ Local Setup (2 minutes)
 
@@ -19,8 +19,8 @@ npm install
 # Copy environment template
 cp .env.example .env
 
-# Edit .env with your OpenRouter API key
-# (Open with your editor and add: OPENROUTER_API_KEY=your_key)
+# Edit .env with your Gemini API key
+# (Open with your editor and add: GEMINI_API_KEY=your_key)
 ```
 
 **Test locally:**
@@ -51,13 +51,13 @@ git push -u origin main
 npm install -g vercel
 vercel login
 vercel
-# When prompted, add OPENROUTER_API_KEY in the environment variables
+# When prompted, add GEMINI_API_KEY in the environment variables
 ```
 
 ### Or Using Vercel Dashboard
 1. Go to [vercel.com/new](https://vercel.com/new)
 2. Import your GitHub repo
-3. Add `OPENROUTER_API_KEY` environment variable
+3. Add `GEMINI_API_KEY` environment variable
 4. Deploy
 
 ## 4️⃣ Update Extension with Vercel URL

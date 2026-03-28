@@ -25,7 +25,7 @@ cat .env.example
 ### 1.4 Create `.env` locally (not committed)
 ```bash
 cp .env.example .env
-# Edit .env and add your OPENROUTER_API_KEY
+# Edit .env and add your GEMINI_API_KEY
 ```
 
 ---
@@ -95,7 +95,7 @@ After deployment completes:
 1. Go to [vercel.com/dashboard](https://vercel.com/dashboard)
 2. Click your project (`modelmirror`)
 3. Settings → Environment Variables
-4. Add: `OPENROUTER_API_KEY` = `your_actual_key`
+4. Add: `GEMINI_API_KEY` = `your_actual_key`
 5. Click "Save"
 6. Click the three dots menu → Redeploy
 
@@ -116,7 +116,7 @@ After deployment completes:
 
 #### 3B.3 Add Environment Variables
 - Click "Environment Variables"
-- Name: `OPENROUTER_API_KEY`
+- Name: `GEMINI_API_KEY`
 - Value: `your_actual_key`
 - Click "Add"
 - Click "Deploy"
@@ -191,7 +191,7 @@ The side panel should show a green dot next to "Server Status" indicating the Ve
 **Fix:**
 1. Confirm Vercel URL in `background.js` is correct
 2. Check Vercel project logs: [vercel.com/dashboard](https://vercel.com/dashboard)
-3. Verify `OPENROUTER_API_KEY` is set in Vercel environment variables
+3. Verify `GEMINI_API_KEY` is set in Vercel environment variables
 4. If issues persist, check that `https://*.vercel.app/*` is in `manifest.json` host_permissions
 
 ### Issue: API key errors in Vercel logs
@@ -215,7 +215,7 @@ The side panel should show a green dot next to "Server Status" indicating the Ve
 - [x] `.env.example` is in the repository (with placeholder values)
 - [x] GitHub repository is created and updated
 - [x] Vercel project is deployed
-- [x] `OPENROUTER_API_KEY` is set in Vercel environment variables
+- [x] `GEMINI_API_KEY` is set in Vercel environment variables
 - [x] `background.js` has the correct Vercel URL
 - [x] Extension is reloaded in Chrome
 - [x] Extension can connect to backend (green server status)
@@ -231,19 +231,15 @@ The side panel should show a green dot next to "Server Status" indicating the Ve
    - Go to Vercel Settings → Domains
    - Add your custom domain (e.g., api.mysite.com)
 
-2. **Upgrade to production OpenRouter model:**
-   - Edit `.env`: `OPENROUTER_MODEL=openai/gpt-4-turbo`
+2. **Upgrade to production Gemini model:**
+   - Edit `.env`: `GEMINI_MODEL=gemini-1.5-pro`
    - Update in Vercel environment variables
    - Redeploy
 
-3. **Add analytics:**
-   - Get your site URL from [OpenRouter Dashboard](https://openrouter.ai/account/analytics)
-   - Add to `.env`: `OPENROUTER_SITE_URL=https://your-domain.com`
-
-4. **Share the extension:**
+3. **Share the extension:**
    - Publish to Chrome Web Store (requires $5 developer account)
    - Share the GitHub repo with others
 
 ---
 
-Need help? Check the [README.md](./README.md) or review Vercel/OpenRouter documentation.
+Need help? Check the [README.md](./README.md) or review Vercel/Google Generative AI documentation.

@@ -9,8 +9,7 @@ require('dotenv').config();
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
-const OPENROUTER_URL   = 'https://openrouter.ai/api/v1/chat/completions';
-const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini';
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
 
 // ── Middleware ─────────────────────────────────────────────────────────────
 app.use(express.json({ limit: '1mb' }));
@@ -245,11 +244,11 @@ app.post('/analyze', async (req, res) => {
     });
   }
 
-  const apiKey = process.env.OPENROUTER_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     const baseResponse = {
       title: 'Missing API Key',
-      explanation: 'OPENROUTER_API_KEY is not set in your .env file. Please add it and restart the server.',
+      explanation: 'GEMINI_API_KEY is not set in your .env file. Please add it and restart the server.',
       why: 'The server needs an API key to call the AI model.',
       intent: 'Configure the server.',
     };
@@ -289,25 +288,29 @@ app.post('/analyze', async (req, res) => {
   }
 
   const messages = [
-    { role: 'system', content: systemPrompt },
-    { role: 'user',   content: userPrompt   },
+    { role: 'user', parts: [{ text: userPrompt }] },
   ];
 
   const headers = {
-    'Authorization': `Bearer ${apiKey}`,
     'Content-Type':  'application/json',
   };
-  if (process.env.OPENROUTER_SITE_URL) headers['HTTP-Referer'] = process.env.OPENROUTER_SITE_URL;
-  if (process.env.OPENROUTER_APP_NAME) headers['X-Title']      = process.env.OPENROUTER_APP_NAME;
 
   try {
     const apiResponse = await axios.post(
-      OPENROUTER_URL,
-      { model: OPENROUTER_MODEL, messages, temperature: 0.2 },
+      `https://generativeai.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`,
+      {
+        systemInstruction: {
+          parts: [{ text: systemPrompt }],
+        },
+        contents: messages,
+        generationConfig: {
+          temperature: 0.2,
+        },
+      },
       { headers }
     );
 
-    const rawContent = apiResponse?.data?.choices?.[0]?.message?.content || '';
+    const rawContent = apiResponse?.data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
     const parsed     = extractJsonObject(rawContent);
 
     const result = isBugs
@@ -318,7 +321,7 @@ app.post('/analyze', async (req, res) => {
 
   } catch (error) {
     const status  = error?.response?.status || 502;
-    const message = error?.response?.data?.error?.message || error?.message || 'OpenRouter request failed.';
+    const message = error?.response?.data?.error?.message || error?.message || 'Gemini API request failed.';
 
     if (isBugs) {
       return res.status(status).json({
@@ -346,7 +349,7 @@ app.post('/analyze', async (req, res) => {
 // ── Start ──────────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
   console.log(`\n🚀 ModelMirror server running at http://localhost:${PORT}\n`);
-  if (!process.env.OPENROUTER_API_KEY) {
-    console.warn('⚠  OPENROUTER_API_KEY is not set in .env — AI calls will fail.\n');
+  if (!process.env.GEMINI_API_KEY) {
+    console.warn('⚠  GEMINI_API_KEY is not set in .env — AI calls will fail.\n');
   }
 });
