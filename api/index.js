@@ -2,8 +2,8 @@
 // This is the main entry point for Vercel deployment
 
 const express = require('express');
-const axios = require('axios');
 const cors = require('cors');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 require('dotenv').config();
 
@@ -290,29 +290,21 @@ app.post('/analyze', async (req, res) => {
   }
 
   const messages = [
-    { role: 'user', parts: [{ text: userPrompt }] },
+    { role: 'user', parts: [{ text: systemPrompt + '\n\n' + userPrompt }] },
   ];
 
-  const headers = {
-    'Content-Type': 'application/json',
-  };
-
   try {
-    const apiResponse = await axios.post(
-      `https://generativeai.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`,
-      {
-        systemInstruction: {
-          parts: [{ text: systemPrompt }],
-        },
-        contents: messages,
-        generationConfig: {
-          temperature: 0.2,
-        },
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({ model: GEMINI_MODEL });
+    
+    const apiResult = await model.generateContent({
+      contents: messages,
+      generationConfig: {
+        temperature: 0.2,
       },
-      { headers }
-    );
+    });
 
-    const rawContent = apiResponse?.data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const rawContent = apiResult.response?.text() || '';
     const parsed = extractJsonObject(rawContent);
 
     const result = isBugs
